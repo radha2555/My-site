@@ -1,19 +1,508 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radha singh</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radha Singh — Aspiring Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #f7f8fc;
+      --surface: #ffffff;
+      --navy:    #1b3a5c;
+      --blue:    #2563a8;
+      --accent:  #0ea5e9;
+      --dark:    #111827;
+      --mid:     #374151;
+      --muted:   #6b7280;
+      --light:   #e5e7eb;
+      --tag-bg:  #eff6ff;
+      --tag-c:   #1d4ed8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 3rem;
+      height: 60px;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid var(--light);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem; font-weight: 500;
+      color: var(--navy); text-decoration: none; letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; padding-top: 60px;
+      display: flex; align-items: center;
+      background: var(--surface); border-bottom: 1px solid var(--light);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0; width: 50%; height: 100%;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto; width: 100%;
+      padding: 4rem 3rem;
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: var(--tag-bg); border: 1px solid #bfdbfe; border-radius: 2px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+      color: var(--tag-c); letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      opacity: 0; animation: up 0.5s 0.1s forwards;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; color: var(--accent); }
+    .hero-name {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 600;
+      line-height: 1.1; color: var(--navy); letter-spacing: -0.02em;
+      opacity: 0; animation: up 0.6s 0.2s forwards;
+    }
+    .hero-name em { font-style: italic; color: var(--blue); }
+    .hero-title {
+      margin-top: 0.75rem; font-size: 1.05rem; color: var(--muted); font-weight: 400;
+      opacity: 0; animation: up 0.6s 0.3s forwards;
+    }
+    .hero-title strong { color: var(--blue); font-weight: 600; }
+    .hero-summary {
+      margin-top: 1.5rem; font-size: 0.92rem; line-height: 1.75;
+      color: var(--mid); max-width: 480px;
+      opacity: 0; animation: up 0.6s 0.4s forwards;
+    }
+    .hero-actions {
+      margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap;
+      opacity: 0; animation: up 0.6s 0.5s forwards;
+    }
+    .btn {
+      display: inline-block; padding: 0.65rem 1.6rem;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em;
+      text-decoration: none; border: 1.5px solid var(--navy);
+      color: var(--navy); background: transparent; cursor: pointer;
+      border-radius: 2px; transition: all 0.2s;
+    }
+    .btn:hover { background: var(--navy); color: #fff; }
+    .btn.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .btn.primary:hover { background: var(--blue); border-color: var(--blue); }
+
+    .hero-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      opacity: 0; animation: up 0.7s 0.55s forwards;
+    }
+    .stat-card {
+      background: #fff; border: 1px solid var(--light);
+      border-top: 3px solid var(--blue); padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .stat-num {
+      font-family: 'IBM Plex Serif', serif; font-size: 2.2rem;
+      font-weight: 600; color: var(--navy); line-height: 1;
+    }
+    .stat-num sup { font-size: 1rem; color: var(--blue); }
+    .stat-label { font-size: 0.72rem; color: var(--muted); margin-top: 0.35rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .hero-contact {
+      grid-column: 1 / -1; background: var(--navy);
+      padding: 1rem 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    }
+    .hero-contact a, .hero-contact span {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+      color: #bfdbfe; text-decoration: none; transition: color 0.2s;
+    }
+    .hero-contact a:hover { color: #fff; }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+    section { padding: 5rem 0; border-bottom: 1px solid var(--light); }
+
+    .sec-label {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+      color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--light); }
+    .sec-title {
+      font-family: 'IBM Plex Serif', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600;
+      color: var(--navy); letter-spacing: -0.015em; margin-bottom: 2.5rem;
+    }
+
+    /* ── ABOUT / SKILLS ── */
+    .about-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .about-text { font-size: 0.93rem; line-height: 1.8; color: var(--mid); }
+    .about-text p + p { margin-top: 1rem; }
+
+    .skills-table { width: 100%; border-collapse: collapse; }
+    .skills-table tr { border-bottom: 1px solid var(--light); }
+    .skills-table tr:last-child { border-bottom: none; }
+    .skills-table td { padding: 0.65rem 0; font-size: 0.85rem; vertical-align: top; }
+    .skills-table td:first-child {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+      color: var(--blue); font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.06em; width: 130px; padding-top: 0.75rem;
+    }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      padding: 0.22rem 0.6rem; font-size: 0.76rem;
+      background: var(--tag-bg); color: var(--tag-c);
+      border: 1px solid #bfdbfe; border-radius: 2px;
+      font-weight: 500; transition: all 0.2s; cursor: default;
+    }
+    .tag:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 2.5rem; padding: 2rem 0; border-bottom: 1px solid var(--light);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--light); }
+    .exp-meta { padding-top: 0.15rem; }
+    .exp-period {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem;
+      color: var(--accent); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .exp-co { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-top: 0.35rem; }
+    .exp-loc { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .exp-role { font-family: 'IBM Plex Serif', serif; font-size: 1.25rem; font-weight: 600; color: var(--dark); margin-bottom: 0.75rem; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .exp-bullets li {
+      font-size: 0.87rem; line-height: 1.65; color: var(--mid);
+      padding-left: 1.1rem; position: relative;
+    }
+    .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.65rem; top: 0.22rem; }
+    .metric { color: var(--blue); font-weight: 600; }
+
+    /* ── PROJECTS ── */
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--light); border: 1px solid var(--light); }
+    .proj-card {
+      background: var(--surface); padding: 1.75rem;
+      transition: all 0.25s; cursor: default; display: flex; flex-direction: column;
+    }
+    .proj-card:hover { background: var(--navy); }
+    .proj-card:hover .proj-name,
+    .proj-card:hover .proj-desc { color: #fff; }
+    .proj-card:hover .proj-period { color: #93c5fd; }
+    .proj-card:hover .tag { background: rgba(255,255,255,0.1); color: #bfdbfe; border-color: rgba(255,255,255,0.2); }
+    .proj-period { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.6rem; transition: color 0.25s; }
+    .proj-name { font-weight: 600; font-size: 1rem; color: var(--navy); margin-bottom: 0.5rem; transition: color 0.25s; }
+    .proj-desc { font-size: 0.82rem; line-height: 1.6; color: var(--mid); flex: 1; transition: color 0.25s; }
+    .proj-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    /* ── EDUCATION ── */
+    .edu-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .edu-card {
+      background: var(--surface); border: 1px solid var(--light);
+      border-left: 4px solid var(--blue); padding: 1.75rem 2rem;
+    }
+    .edu-deg { font-family: 'IBM Plex Serif', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .edu-school { font-size: 0.85rem; color: var(--blue); margin-top: 0.4rem; font-weight: 500; }
+    .edu-info { display: flex; gap: 1.5rem; margin-top: 1rem; align-items: baseline; }
+    .edu-cgpa { font-family: 'IBM Plex Serif', serif; font-size: 1.6rem; font-weight: 600; color: var(--navy); }
+    .edu-cgpa-l { font-size: 0.7rem; color: var(--muted); }
+    .edu-year { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--accent); }
+
+    .cert-list { list-style: none; }
+    .cert-list li { padding: 0.6rem 0; border-bottom: 1px solid var(--light); font-size: 0.87rem; color: var(--mid); display: flex; align-items: center; gap: 0.6rem; }
+    .cert-list li::before { content: '✦'; color: var(--accent); font-size: 0.55rem; }
+    .cert-list li:last-child { border-bottom: none; }
+
+    /* ── CONTACT ── */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-intro { font-size: 0.93rem; line-height: 1.8; color: var(--mid); }
+    .contact-intro p + p { margin-top: 1rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.85rem 1.25rem; border: 1px solid var(--light);
+      background: var(--surface); text-decoration: none; color: var(--dark);
+      font-size: 0.87rem; transition: all 0.2s;
+    }
+    .contact-link:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .contact-link:hover .ctype { color: #93c5fd; }
+    .ctype { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; width: 52px; flex-shrink: 0; transition: color 0.2s; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 1.75rem 3rem; display: flex; justify-content: space-between; align-items: center;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted);
+    }
+
+    @keyframes up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 860px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1rem; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero::before { display: none; }
+      .page { padding: 0 1.25rem; }
+      .about-wrap, .contact-wrap, .edu-row { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.25rem; }
+      .proj-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.25rem; flex-direction: column; gap: 0.4rem; }
+    }
+  </style>
 </head>
 <body>
-<div class="top-container">
-    <h1>I'm Radha</h1>
-    <p>A Web designer and a progrmmer</p>
+
+<nav>
+  <a href="#" class="nav-logo">radha<span>.</span>singh</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">Available for opportunities</div>
+      <h1 class="hero-name">Radha<br><em>Singh</em></h1>
+      <p class="hero-title"><strong>Aspiring Data Scientist</strong> · Data Analyst · ML Engineer</p>
+      <p class="hero-summary">Building at the intersection of data, machine learning, and software — turning raw data into models, insights, and products that actually move the needle.</p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn primary">View Experience</a>
+        <a href="#contact" class="btn">Get in Touch</a>
+      </div>
+    </div>
+    <div>
+      <div class="hero-cards">
+        <div class="stat-card">
+          <div class="stat-num">1.5<sup>+</sup></div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">9.6</div>
+          <div class="stat-label">CGPA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">90<sup>%</sup></div>
+          <div class="stat-label">Latency Reduced</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">89<sup>%</sup></div>
+          <div class="stat-label">Search Accuracy↑</div>
+        </div>
+        <div class="hero-contact">
+          <span>📍 Mumbai</span>
+          <a href="tel:+918451996729">+91 8451996729</a>
+          <a href="mailto:singhradha0521@gmail.com">singhradha0521@gmail.com</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+  <section id="about">
+    <div class="sec-label">01 &nbsp;Profile</div>
+    <h2 class="sec-title">About Me</h2>
+    <div class="about-wrap">
+      <div class="about-text">
+        <p>I'm a final-year B.Voc student in AI & Data Science at Thakur College of Engineering and Technology (9.6 CGPA), with 1.5 years of hands-on industry experience spanning data analytics, machine learning, and full-stack web development.</p>
+        <p>I've built and deployed AI chatbots, real-time dashboards, and ML-powered APIs. I'm most energised when working with LangChain pipelines, vectorstores, and NLP — and I'm actively looking for product-based data science or analyst roles.</p>
+        <p>Currently at Prerak Infotech as a Python Developer Trainee, building EV trip planning infrastructure and multi-platform Google API data pipelines.</p>
+      </div>
+      <div>
+        <table class="skills-table">
+          <tr><td>Languages</td><td><div class="tag-list"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span><span class="tag">R</span><span class="tag">C</span></div></td></tr>
+          <tr><td>ML / AI</td><td><div class="tag-list"><span class="tag">Scikit-learn</span><span class="tag">TensorFlow</span><span class="tag">LangChain</span><span class="tag">FAISS</span><span class="tag">Chroma</span><span class="tag">Whisper</span></div></td></tr>
+          <tr><td>Frameworks</td><td><div class="tag-list"><span class="tag">FastAPI</span><span class="tag">Flask</span><span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">Express.js</span></div></td></tr>
+          <tr><td>Databases</td><td><div class="tag-list"><span class="tag">PostgreSQL</span><span class="tag">MongoDB</span><span class="tag">MySQL</span></div></td></tr>
+          <tr><td>BI & Viz</td><td><div class="tag-list"><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Matplotlib</span><span class="tag">Pandas</span></div></td></tr>
+          <tr><td>Tools</td><td><div class="tag-list"><span class="tag">Git</span><span class="tag">Selenium</span><span class="tag">OAuth 2.0</span><span class="tag">Google APIs</span></div></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-label">02 &nbsp;Experience</div>
+    <h2 class="sec-title">Where I've Worked</h2>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jul 2025 – Present</div>
+          <div class="exp-co">Prerak Infotech</div>
+          <div class="exp-loc">Mumbai</div>
+        </div>
+        <div>
+          <div class="exp-role">Python Developer Trainee</div>
+          <ul class="exp-bullets">
+            <li>Building an EV trip planning app with FlutterFlow, integrating Mappls APIs for route optimisation, charger discovery, and POI mapping with PostgreSQL.</li>
+            <li>Integrated Google Analytics, My Business, Merchant Center & Google Ads via OAuth 2.0 for automated multi-platform data ingestion.</li>
+            <li>Built scalable ETL pipelines from SQL databases to Power BI for real-time dashboard refreshes.</li>
+            <li>Developed Power BI dashboards covering sales performance, customer behaviour, and operational KPIs for multiple clients.</li>
+            <li>Engineered embeddable chatbot widgets for automated lead capture across company websites.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Jan 2025 – Jun 2025</div>
+          <div class="exp-co">Data Bolta Hai</div>
+          <div class="exp-loc">Mumbai</div>
+        </div>
+        <div>
+          <div class="exp-role">Data Science Intern</div>
+          <ul class="exp-bullets">
+            <li>Built AI chatbots with LangChain, FastAPI & React.js for NLP-based query resolution in legal and financial domains.</li>
+            <li>Integrated FAISS & Chroma vectorstores — improved document search accuracy by <span class="metric">89%</span>.</li>
+            <li>Deployed ML/NLP models reducing real-time prediction latency by <span class="metric">90%</span>.</li>
+            <li>Built Selenium & Whisper scraping pipelines to automate data collection and indexing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-period">Dec 2023 – Mar 2024</div>
+          <div class="exp-co">Vaishali Pharma Ltd.</div>
+          <div class="exp-loc">Mumbai</div>
+        </div>
+        <div>
+          <div class="exp-role">Data Analyst Intern</div>
+          <ul class="exp-bullets">
+            <li>Conducted EDA to surface sales trends and patterns for data-driven planning.</li>
+            <li>Built Power BI & Excel dashboards — improved quarterly demand visibility by <span class="metric">45%</span>.</li>
+            <li>Optimised reporting workflows saving <span class="metric">30+ hours</span> of manual effort per cycle.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-label">03 &nbsp;Projects</div>
+    <h2 class="sec-title">What I've Built</h2>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-period">Feb – Mar 2024</div>
+        <div class="proj-name">Voice Chatbot</div>
+        <div class="proj-desc">Real-time NLP Q&A with context-aware speech and dynamic document search. Response accuracy improved by 87%.</div>
+        <div class="proj-tags"><span class="tag">FastAPI</span><span class="tag">NLP</span><span class="tag">Whisper</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-period">Mar – Apr 2024</div>
+        <div class="proj-name">IBC Legal Chatbot</div>
+        <div class="proj-desc">Chroma vectorstore indexing with React tabbed UI for precise multi-document legal reference answering.</div>
+        <div class="proj-tags"><span class="tag">LangChain</span><span class="tag">Chroma</span><span class="tag">React.js</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-period">Apr – May 2024</div>
+        <div class="proj-name">RBI Financial Chatbot</div>
+        <div class="proj-desc">Real-time scraping pipeline serving searchable financial regulatory content to 144 active users.</div>
+        <div class="proj-tags"><span class="tag">Selenium</span><span class="tag">FAISS</span><span class="tag">FastAPI</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-period">May – Jun 2024</div>
+        <div class="proj-name">ITC Legal Chatbot</div>
+        <div class="proj-desc">Handles static and dynamic legal inputs with high accuracy across complex document structures.</div>
+        <div class="proj-tags"><span class="tag">LangChain</span><span class="tag">Flask</span><span class="tag">NLP</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-period">Dec 2022 – Feb 2023</div>
+        <div class="proj-name">Sales Forecasting Dashboard</div>
+        <div class="proj-desc">Power BI dashboard for quarterly planning insights — improved forecast accuracy by 88%.</div>
+        <div class="proj-tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Excel</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-period">Jan – Feb 2024</div>
+        <div class="proj-name">Blog Management System</div>
+        <div class="proj-desc">Full-stack app with React.js, Node.js/Express.js, and Multer + Cloudinary file handling.</div>
+        <div class="proj-tags"><span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">Cloudinary</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-label">04 &nbsp;Education & Credentials</div>
+    <h2 class="sec-title">Background</h2>
+    <div class="edu-row">
+      <div class="edu-card">
+        <div class="edu-deg">Bachelor of Vocation (B.Voc) in Artificial Intelligence & Data Science</div>
+        <div class="edu-school">Thakur College of Engineering and Technology, Mumbai</div>
+        <div class="edu-info">
+          <div>
+            <div class="edu-cgpa">9.6<small style="font-size:1rem;color:var(--muted)">/10</small></div>
+            <div class="edu-cgpa-l">CGPA</div>
+          </div>
+          <div class="edu-year">Class of 2025</div>
+        </div>
+      </div>
+      <div>
+        <ul class="cert-list">
+          <li>Microsoft Excel Associate (MS-200)</li>
+          <li>NASSCOM Certified Web Developer (QP-SSC/00503)</li>
+          <li>Languages: English · Hindi · Marathi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-label">05 &nbsp;Contact</div>
+    <h2 class="sec-title">Let's Connect</h2>
+    <div class="contact-wrap">
+      <div class="contact-intro">
+        <p>I'm actively looking for <strong>Data Scientist</strong> and <strong>Data Analyst</strong> roles in product-based companies. Open to full-time opportunities, internships, and collaborations.</p>
+        <p>If you're working on something interesting in data, ML, or AI — I'd love to hear from you.</p>
+      </div>
+      <div class="contact-links">
+        <a href="tel:+918451996729" class="contact-link"><span class="ctype">Phone</span>+91 8451996729</a>
+        <a href="mailto:singhradha0521@gmail.com" class="contact-link"><span class="ctype">Email</span>singhradha0521@gmail.com</a>
+        <a href="https://linkedin.com" target="_blank" class="contact-link"><span class="ctype">LinkedIn</span>linkedin.com/in/radhasingh</a>
+        <a href="https://github.com" target="_blank" class="contact-link"><span class="ctype">GitHub</span>github.com/radhasingh</a>
+      </div>
+    </div>
+  </section>
+
 </div>
-<div class="middle-container"></div>
-<div class="bottom-container"></div>
+
+<footer>
+  <span>© 2025 Radha Ratnesh Singh · Mumbai</span>
+  <span>Aspiring Data Scientist · Data Analyst · ML Engineer</span>
+</footer>
+
 </body>
 </html>
